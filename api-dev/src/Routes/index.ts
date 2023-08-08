@@ -1,7 +1,8 @@
-import { response, Router } from "express";
+import {  Router } from "express";
 import { IngredientController } from "../Controllers/IngredientController";
 import { RecipeController } from "../Controllers/RecipeController";
 import { ShoppingListController } from "../Controllers/ShoppingListController";
+import { TagController } from "../Controllers/TagController";
 
 // GLOBAL ROUTER
 const routes = Router();
@@ -28,9 +29,17 @@ shoppingListRouter.post("/create", ShoppingListController.create);
 shoppingListRouter.put("/update", ShoppingListController.update);
 shoppingListRouter.delete("/delete/:id", ShoppingListController.delete);
 
+// TAGS
+const tagRouter = Router();
+tagRouter.get("/list", TagController.list);
+tagRouter.post("/create", IngredientController.create);
+tagRouter.put("/update", IngredientController.update);
+tagRouter.delete("/delete/:id", IngredientController.delete);
+
 // BINDS
 routes.use("/recipe", recipeRouter);
 routes.use("/ingredient", ingredientRouter);
 routes.use("/shopping-list", shoppingListRouter);
+routes.use("/tag", tagRouter);
 
 export default routes;

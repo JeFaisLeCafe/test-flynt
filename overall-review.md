@@ -26,6 +26,7 @@ The `package.json` file is clean, with only necessary packages and scripts. The 
 The code quality of the api is good and the functions are well named. However, there are few imports that unecessary, and should be removed.
 For example, in the `app.ts` file, `IncomingMessage` and `ServerResponse`; or in the `server.ts` file, `IngredientController`. 
 The codebase is in strict typescript mode, which is a good practice. 
+There is a naming issue inside the `IngredientController.ts` file, where variables are named as `recipe` instead of `ingredient`.
 
 ### Web
 The `package.json` file is clean, with only necessary packages and scripts. The `tsconfig.json` file is also clean, with only necessary configurations. However, the target is "es5" while the project uses typescript and the backend uses "es6", so it should be "es6" instead.
