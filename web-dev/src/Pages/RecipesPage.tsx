@@ -20,11 +20,12 @@ export function RecipesPage(): JSX.Element {
 
   const { data, status, isLoading } = useQueryListRecipe();
 
-  if (status === "error") {
-    return <ErrorPage />;
-  }
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (status === "error" || !data) {
+    return <ErrorPage />;
   }
 
   return (

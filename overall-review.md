@@ -38,3 +38,8 @@ Also, a lot of `onClick` handlers are defined inline, which is not a great pract
 Concerning queries and mutations, they are not typed, even though we have full access to their types. It would be better to type them, to avoid errors.
 But it is good to leverage axios and react-query, which are great libraries to handle api calls.
 A note on navigation: it is good to use react-router-dom, but I'm not sure why the AppBar is not in the navigation, but outside; it would be better to have it inside the navigation, so that there is no reloading of the page when navigating between pages.
+The component on error should either:
+- navigate to the error page
+- display an error message
+- display a toast
+But the current implementation is not very satisfying.

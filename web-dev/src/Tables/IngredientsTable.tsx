@@ -5,30 +5,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import {
-  Box,
-  Button,
-  Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent
-} from "@mui/material";
+import { Box, Button, Chip } from "@mui/material";
 import { Ingredient } from "../Types/Ingredient";
-import {
-  useMutationIngredientDelete,
-  useMutationIngredientUpdate
-} from "../Hooks/Mutation/IngredientsMutation";
+import { useMutationIngredientDelete } from "../Hooks/Mutation/IngredientsMutation";
 import { strToMuiColor } from "../Utils/strToMuiColor";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { Tag } from "../Types/Tag";
 import { useState } from "react";
+import { ModalModifyTag } from "../Components/ModalModifyTag";
 
 export function IngredientTable({
   ingredients,
@@ -39,38 +23,10 @@ export function IngredientTable({
 }): JSX.Element {
   const [selectedRow, setSelectedRow] = useState<Ingredient>();
 
-  const handleClose = () => {
-    setSelectedRow(undefined);
-  };
-
   const { mutateAsync: deleteIngredient } = useMutationIngredientDelete();
-  const { mutateAsync: updateIngredient } = useMutationIngredientUpdate();
 
   const handlerButtonDelete = async (ingredient: Ingredient) => {
     await deleteIngredient(ingredient.id);
-  };
-
-  const handleModifyIngredient = async () => {
-    if (!selectedRow) return;
-    await updateIngredient({
-      id: selectedRow.id,
-      name: selectedRow.name,
-      price: selectedRow.price,
-      tagId: selectedRow.tag.id
-    });
-
-    setSelectedRow(undefined);
-  };
-
-  const handleSelect = (e: SelectChangeEvent<number>) => {
-    const newIngredient = {
-      ...selectedRow,
-      tag: {
-        id: e.target.value as number,
-        name: tags.find((t) => t.id === e.target.value)?.name ?? ""
-      }
-    };
-    setSelectedRow(newIngredient as Ingredient);
   };
 
   return (
@@ -119,47 +75,12 @@ export function IngredientTable({
       </TableContainer>
 
       {!!selectedRow && (
-        <Dialog open={!!selectedRow} onClose={handleClose}>
-          <DialogTitle>Change Ingredient Tag</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              By modifiying the tag of this ingredient, you might change the
-              recipes associated with this ingredient.
-            </DialogContentText>
-            <FormControl fullWidth margin="normal" required>
-              <InputLabel id="tag">Tag</InputLabel>
-              <Select
-                variant="outlined"
-                labelId="tag"
-                id="name-tag"
-                value={selectedRow?.tag.id}
-                label="Tag"
-                onChange={handleSelect}
-              >
-                {tags?.map((t: Tag) => (
-                  <MenuItem key={t.id} value={t.id}>
-                    {t.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </DialogContent>
-          <DialogActions>
-            <Button variant="text" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleModifyIngredient}
-              disabled={
-                selectedRow.tag.id ===
-                ingredients.find((i) => i.id === selectedRow.id)?.tag.id
-              }
-            >
-              Modify
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <ModalModifyTag
+          selectedRow={selectedRow}
+          setSelectedRow={setSelectedRow}
+          tags={tags}
+          ingredients={ingredients}
+        />
       )}
     </Box>
   );
