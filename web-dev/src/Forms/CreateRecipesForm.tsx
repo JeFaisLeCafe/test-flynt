@@ -3,7 +3,7 @@ import {
   Box,
   Button,
   FormControl,
-  TextField,
+  TextField
 } from "@mui/material";
 import { useState } from "react";
 import { CardCustom } from "../Components/CardCustom";
@@ -41,17 +41,18 @@ export function CreateRecipesForm(): JSX.Element {
       name,
       timeToCook,
       numberOfPeople,
-      ingredients: selectedIngredients.map((e) => e.id),
+      ingredients: selectedIngredients.map((e) => e.id)
     });
 
     resetFields();
   };
 
-  if (status === "error") {
-    return <ErrorPage />;
-  }
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (status === "error" || !ingredients) {
+    return <ErrorPage />;
   }
 
   return (

@@ -18,18 +18,19 @@ export function IngredientPage(): JSX.Element {
     setIsCreationMode(false);
   };
 
-  const { data, status, isLoading } = useQueryIngredientList();
+  const { data: ingredients, status, isLoading } = useQueryIngredientList();
   const {
     data: tags,
     isLoading: isTagsLoading,
     status: tagsStatus
   } = useQueryTagList();
 
-  if (status === "error" || tagsStatus === "error") {
-    return <ErrorPage />;
-  }
   if (isLoading || isTagsLoading) {
     return <Loader />;
+  }
+
+  if (status === "error" || tagsStatus === "error" || !ingredients || !tags) {
+    return <ErrorPage />;
   }
 
   return (
@@ -45,7 +46,10 @@ export function IngredientPage(): JSX.Element {
       </Box>
       <Box display={"flex"} gap={2}>
         {isCreationMode && <CreateIngredientForm tags={tags} />}
-        <IngredientTable ingredients={data} tags={tags} />
+        <IngredientTable
+          ingredients={ingredients.sort((a, b) => a.id - b.id)}
+          tags={tags}
+        />
       </Box>
     </div>
   );
