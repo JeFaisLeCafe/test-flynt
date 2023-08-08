@@ -35,4 +35,4 @@ In the `Components/` folder, the components are defined with their parameters ty
 Also, the styles are defined in a `index.css` file at the root of the project, which might become difficult to maintain; instead, we could use either the `sx` props of material ui, use styled-components, or have a `styles` folder with a file for each component.
 Also, a lot of `onClick` handlers are defined inline, which is not a great practice; [it would be better to define them in the component itself](https://stackoverflow.com/questions/50350202/when-to-use-inline-function-on-button-onclick-event-javascript-react-js).
 Concerning queries and mutations, they are not typed, even though we have full access to their types. It would be better to type them, to avoid errors.
-
+But it is good to leverage axios and react-query, which are great libraries to handle api calls.

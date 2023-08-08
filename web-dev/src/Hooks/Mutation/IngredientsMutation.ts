@@ -14,13 +14,14 @@ export const useMutationIngredientCreate = (): UseMutationResult<
     async ({ name, price }: { name: string; price: number }) => {
       return await axios.post(`/ingredient/create`, {
         name,
-        price,
+        price
       });
     },
     {
       onSuccess: () => {
         clientQuery.invalidateQueries(Requests.listRecipe);
-      },
+        clientQuery.invalidateQueries(Requests.listIngredient);
+      }
     }
   );
 };
@@ -40,7 +41,7 @@ export const useMutationIngredientDelete = (): UseMutationResult<
     {
       onSuccess: () => {
         clientQuery.invalidateQueries(Requests.listIngredient);
-      },
+      }
     }
   );
 };
