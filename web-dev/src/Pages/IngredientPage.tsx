@@ -5,6 +5,7 @@ import { Loader } from "../Components/Loader";
 import { ErrorPage } from "./ErrorPage";
 import { IngredientTable } from "../Tables/IngredientsTable";
 import { CreateIngredientForm } from "../Forms/CreateIngredientForm";
+import { useQueryTagList } from "../Hooks/Query/TagQuery";
 
 export function IngredientPage(): JSX.Element {
   const [isCreationMode, setIsCreationMode] = useState(false);
@@ -18,11 +19,16 @@ export function IngredientPage(): JSX.Element {
   };
 
   const { data, status, isLoading } = useQueryIngredientList();
+  const {
+    data: tags,
+    isLoading: isTagsLoading,
+    status: tagsStatus
+  } = useQueryTagList();
 
-  if (status === "error") {
+  if (status === "error" || tagsStatus === "error") {
     return <ErrorPage />;
   }
-  if (isLoading) {
+  if (isLoading || isTagsLoading) {
     return <Loader />;
   }
 
@@ -38,7 +44,7 @@ export function IngredientPage(): JSX.Element {
         </Button>
       </Box>
       <Box display={"flex"} gap={2}>
-        {isCreationMode && <CreateIngredientForm />}
+        {isCreationMode && <CreateIngredientForm tags={tags} />}
         <IngredientTable ingredients={data} />
       </Box>
     </div>

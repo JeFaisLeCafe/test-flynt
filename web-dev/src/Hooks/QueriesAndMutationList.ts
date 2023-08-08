@@ -26,4 +26,9 @@ export enum Requests {
   createShoppingList = "createShoppingList",
   updateShoppingList = "updateShoppingList",
   deleteShoppingList = "deleteShoppingList",
+
+  // TAG
+
+  // queries
+  listTag = "listTagQuery"
 }

@@ -4,7 +4,7 @@ import { Ingredient } from "../Entities/Ingredient";
 export class IngredientService {
   static async list(): Promise<Ingredient[]> {
     const ingredient = await getRepository(Ingredient).find({
-      relations: ["tags"]
+      relations: ["tag"]
     });
     return ingredient;
   }

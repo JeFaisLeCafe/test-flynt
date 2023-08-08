@@ -5,12 +5,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Chip } from "@mui/material";
 import { Ingredient } from "../Types/Ingredient";
 import { useMutationIngredientDelete } from "../Hooks/Mutation/IngredientsMutation";
+import { strToMuiColor } from "../Utils/strToMuiColor";
 
 export function IngredientTable({
-  ingredients,
+  ingredients
 }: {
   ingredients: Ingredient[];
 }): JSX.Element {
@@ -20,6 +21,8 @@ export function IngredientTable({
     await deleteIngredient(ingredient.id);
   };
 
+  console.log("ingredients", ingredients);
+
   return (
     <Box className="tableContainer">
       <TableContainer component={Paper}>
@@ -27,6 +30,7 @@ export function IngredientTable({
           <TableHead>
             <TableRow>
               <TableCell>My ingredients</TableCell>
+              <TableCell align="right">Tag</TableCell>
               <TableCell align="right">Price</TableCell>
               <TableCell align="right">Delete</TableCell>
             </TableRow>
@@ -39,6 +43,13 @@ export function IngredientTable({
               >
                 <TableCell component="th" scope="row">
                   {row.name}
+                </TableCell>
+                <TableCell align="right">
+                  <Chip
+                    label={row.tag.name}
+                    onDelete={() => {}}
+                    color={strToMuiColor(row.tag.name)}
+                  />
                 </TableCell>
                 <TableCell align="right">{row.price} €</TableCell>
                 <TableCell align="right">
