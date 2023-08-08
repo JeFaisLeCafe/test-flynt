@@ -54,3 +54,38 @@ export const useMutationIngredientDelete = (): UseMutationResult<
     }
   );
 };
+
+export const useMutationIngredientUpdate = (): UseMutationResult<
+  any,
+  unknown,
+  { id: number; name: string; price: number; tagId: number }
+> => {
+  const clientQuery = useQueryClient();
+
+  return useMutation(
+    [Requests.updateIngredient],
+    async ({
+      id,
+      name,
+      price,
+      tagId
+    }: {
+      id: number;
+      name: string;
+      price: number;
+      tagId: number;
+    }) => {
+      return await axios.put(`/ingredient/update/${id}`, {
+        id,
+        name,
+        price,
+        tagId
+      });
+    },
+    {
+      onSuccess: () => {
+        clientQuery.invalidateQueries(Requests.listIngredient);
+      }
+    }
+  );
+};

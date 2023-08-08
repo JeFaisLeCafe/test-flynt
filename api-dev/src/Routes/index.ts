@@ -1,4 +1,4 @@
-import {  Router } from "express";
+import { Router } from "express";
 import { IngredientController } from "../Controllers/IngredientController";
 import { RecipeController } from "../Controllers/RecipeController";
 import { ShoppingListController } from "../Controllers/ShoppingListController";
@@ -18,7 +18,7 @@ recipeRouter.delete("/delete/:id", RecipeController.delete);
 const ingredientRouter = Router();
 ingredientRouter.get("/list", IngredientController.list);
 ingredientRouter.post("/create", IngredientController.create);
-ingredientRouter.put("/update", IngredientController.update);
+ingredientRouter.put("/update/:id", IngredientController.update);
 ingredientRouter.delete("/delete/:id", IngredientController.delete);
 
 // SHOPPING LIST
@@ -32,9 +32,9 @@ shoppingListRouter.delete("/delete/:id", ShoppingListController.delete);
 // TAGS
 const tagRouter = Router();
 tagRouter.get("/list", TagController.list);
-tagRouter.post("/create", IngredientController.create);
-tagRouter.put("/update", IngredientController.update);
-tagRouter.delete("/delete/:id", IngredientController.delete);
+tagRouter.post("/create", TagController.create);
+tagRouter.put("/update/:id", TagController.update);
+tagRouter.delete("/delete/:id", TagController.delete);
 
 // BINDS
 routes.use("/recipe", recipeRouter);

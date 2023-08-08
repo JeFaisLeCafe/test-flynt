@@ -98,7 +98,7 @@ export function CreateIngredientForm({ tags }: Props): JSX.Element {
             </span>
           </FormControl>
 
-          <FormControl margin="normal">
+          <FormControl margin="normal" fullWidth>
             <Button onClick={handlerSubmitNewIngredient} variant="contained">
               Submit
             </Button>

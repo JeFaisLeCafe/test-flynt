@@ -10,7 +10,7 @@ type MuiColor =
 // hash the string and generate a random color
 export const strToMuiColor = (str: string): MuiColor => {
   const hash = str.split("").reduce((acc, char) => {
-    return acc + (char.charCodeAt(0) % 10);
+    return acc + (char.charCodeAt(0) % 11);
   }, 0);
 
   const colorSchemes: MuiColor[] = [
